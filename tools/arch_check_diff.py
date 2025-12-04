@@ -11,7 +11,7 @@ if not api_key:
 
 client = OpenAI(api_key=api_key)
 
-ROOT = Path(__file__).resolve().parent.parent / "cl-arch-mvp"
+ROOT = Path(__file__).resolve().parent.parent
 
 def get_git_diff():
     result = subprocess.run([
@@ -34,6 +34,7 @@ def main():
     for file in modified_files:
         file_path = ROOT / file
         if not file_path.exists():
+            print(f"Archivo no encontrado: {file}")
             continue
         code = read_file(file_path)
         prompt = f"""
@@ -62,6 +63,8 @@ No añadas ningún texto fuera del JSON.
             input=prompt,
         )
         output = response.output[0].content[0].text
+        print(f"\nRevisión de {file}:")
+        print(output)
         issues.append(output)
 
     print("\n\n".join(issues))
