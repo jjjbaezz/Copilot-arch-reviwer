@@ -1,4 +1,6 @@
 import os
+import sys
+import json
 from pathlib import Path
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -73,18 +75,16 @@ No añadas ningún texto fuera del JSON.
     print(output)
 
     # Si el resultado es JSON y architecture_ok es false, salir con error
-    import json
     result = None
     try:
-      result = json.loads(output)
-    except Exception:
-      result = None
+        result = json.loads(output)
+    except json.JSONDecodeError:
+        result = None
 
     if result is not None:
-      if not result.get("architecture_ok", True):
-        print("[ERROR] architecture_ok es false. Saliendo con exit(1)")
-        import sys
-        sys.exit(1)
+        if not result.get("architecture_ok", True):
+            print("[ERROR] architecture_ok es false. Saliendo con exit(1)")
+            sys.exit(1)
 
 if __name__ == "__main__":
     main()
