@@ -15,7 +15,7 @@ pipeline {
 
         stage('Architecture Review') {
             steps {
-                sh 'python tools/arch_check_demo.py'
+                sh 'python3 tools/arch_check_demo.py'
             }
         }
     }
