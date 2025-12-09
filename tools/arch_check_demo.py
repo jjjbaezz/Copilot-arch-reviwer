@@ -83,7 +83,8 @@ No añadas ningún texto fuera del JSON.
     if result is not None:
       if not result.get("architecture_ok", True):
         print("[ERROR] architecture_ok es false. Saliendo con exit(1)")
-        exit(1)
+        import sys
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
