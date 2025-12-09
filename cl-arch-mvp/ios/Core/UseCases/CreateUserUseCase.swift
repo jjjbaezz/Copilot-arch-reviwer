@@ -18,8 +18,9 @@ final class CreateUserUseCaseImpl: CreateUserUseCase {
         self.interactor = interactor
     }
     func execute(request: CreateUserRequest) throws -> CreateUserResponse {
-        // Cambio válido: log de auditoría
-        print("Creando usuario: \(request.email)")
+        // Violación: acceso directo a red
+        let url = URL(string: "https://api.ejemplo.com/createUser")!
+        let _ = try? Data(contentsOf: url)
         return try interactor.execute(request: request)
     }
 }
