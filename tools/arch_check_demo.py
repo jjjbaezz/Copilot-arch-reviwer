@@ -73,12 +73,13 @@ No añadas ningún texto fuera del JSON.
     print(output)
     # Si el resultado es JSON y architecture_ok es false, salir con error
     import json
+    result = None
     try:
       result = json.loads(output)
-      if not result.get("architecture_ok", True):
-        exit(1)
     except Exception:
       pass
+    if result is not None and not result.get("architecture_ok", True):
+      exit(1)
 
 if __name__ == "__main__":
     main()
