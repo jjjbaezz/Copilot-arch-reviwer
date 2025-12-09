@@ -71,15 +71,19 @@ No añadas ningún texto fuera del JSON.
 
     output = response.output[0].content[0].text
     print(output)
+
     # Si el resultado es JSON y architecture_ok es false, salir con error
     import json
     result = None
     try:
       result = json.loads(output)
     except Exception:
-      pass
-    if result is not None and not result.get("architecture_ok", True):
-      exit(1)
+      result = None
+
+    if result is not None:
+      if not result.get("architecture_ok", True):
+        print("[ERROR] architecture_ok es false. Saliendo con exit(1)")
+        exit(1)
 
 if __name__ == "__main__":
     main()
